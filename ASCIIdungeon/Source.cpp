@@ -730,6 +730,28 @@ void GenerarMapa(int **matriz, int *fila, int *columna)
 	}
 }
 
+void RotarPieza(int **pieza, int *dir)
+{
+	int *dim; dim = new int; *dim = 3;
+	int **aux; aux = CrearMatriz(dim, dim);
+	int counter = *dir;
+
+	while (counter > 0)
+	{
+		for (int i = 0; i < 3; i++)
+			aux[i][2] = pieza[0][i];
+		for (int i = 0; i < 3; i++)
+			aux[i][1] = pieza[1][i];
+		for (int i = 0; i < 3; i++)
+			aux[i][0] = pieza[2][i];
+		counter--;
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+			pieza[i][j] = aux[i][j];
+	}
+}
 int main()
 {
 	bool *es_enter, *es_esc, *tiene_llave, *uso_pocion;
