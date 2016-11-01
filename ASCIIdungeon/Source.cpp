@@ -52,6 +52,13 @@ int** GenerarPieza(int *id_pieza);
 // crea y genera una matriz de 3 x 3 segun *id_pieza
 void GenerarMapa(int **matriz, int *fila, int *columna);
 // genera una matriz con los valores *id_pieza (las dimensiones de la matriz dada tienen que ser de (*fila / 3) x (*columna / 3)
+void RotarPieza(int **pieza, int *dir);
+/* rota la pieza
+   *dir | grados
+     0      0
+     1     90
+     2    180
+     3    270    */
 
 // aqui comienzan las funciones
 void Dibujante(int *menu_state, int *hp_jugador, int *cant_pociones, int *dmg, bool *tiene_llave, bool *uso_pocion, int *id_enemigo, int *hp_enemigo, int **matriz, int *fila, int *columna)
@@ -137,7 +144,7 @@ void Estado(int i, int j, int *hp_jugador, int *cant_pociones, int *dmg, bool *t
 
 	if (i == 2 && j == 2) // 2da linea: HP
 	{
-		cout << "HP: " << *hp_jugador << "/5";
+		cout << "RAM: " << *hp_jugador << "/5";
 	}
 	else if (i == 11 && j == 2)
 	{
@@ -151,19 +158,19 @@ void Estado(int i, int j, int *hp_jugador, int *cant_pociones, int *dmg, bool *t
 	}
 	else if (i == 2 && j == 4) // 4ta linea: ataque
 	{
-		cout << "Ataque:  +" << *dmg << " DMG";
+		cout << "Nivel de Corrupcion: +" << *dmg;
 	}
 	else if (i == 2 && j == 6) // 6ta linea: pociones
 	{
-		cout << "Pociones: " << *cant_pociones;
+		cout << "Pointers: " << *cant_pociones;
 	}
 	else if (i == 2 && j == 8) // 8va linea: tiene la llave?
 	{
 		if (*tiene_llave)
 		{
 			cout << "Tienes la ";
-			Console::ForegroundColor = ConsoleColor::Yellow;
-			cout << "LLAVE";
+			Console::ForegroundColor = ConsoleColor::Red;
+			cout << "CLAVE";
 			Console::ForegroundColor = ConsoleColor::Gray;
 			cout << "!";
 		}
@@ -171,8 +178,8 @@ void Estado(int i, int j, int *hp_jugador, int *cant_pociones, int *dmg, bool *t
 		else
 		{
 			cout << "No tienes la ";
-			Console::ForegroundColor = ConsoleColor::Yellow;
-			cout << "LLAVE";
+			Console::ForegroundColor = ConsoleColor::Red;
+			cout << "CLAVE";
 			Console::ForegroundColor = ConsoleColor::Gray;
 		}
 	}
@@ -195,12 +202,12 @@ void Texto(int i, int j, int *id_enemigo, int *hp_enemigo)
 	}
 	else if (j == 15 && i == 2)
 	{
-		cout << "Atacas con " << _dmg << " DMG!";
+		cout << "Inyectas " << _dmg << " bytes!";
 	}
 	else if (j == 17 && i == 2)
 	{
 		ImprimirEnemigo(id_enemigo, hp_enemigo);
-		cout << " muere.";
+		cout << " es corrompido.";
 	}
 	else if (j == 22 && i == 2)
 	{
@@ -215,36 +222,39 @@ void ImprimirEnemigo(int *id_enemigo, int *hp_enemigo)
 	switch (*id_enemigo)
 	{
 	case 0:
-		cout << "Rata Gigante";
+		cout << "int";
 		*hp_enemigo = 5;
 		break;
 	case 1:
-		cout << "Zombie";
+		cout << "double";
 		*hp_enemigo = 6;
 		break;
 	case 2:
-		cout << "Gargola";
+		cout << "string";
 		*hp_enemigo = 8;
 		break;
 	case 3:
-		cout << "Esqueleto";
+		cout << "function()";
 		*hp_enemigo = 7;
 		break;
 	case 4:
-		cout << "Espiritu";
+		cout << "class";
 		*hp_enemigo = 10;
 		break;
 	case 5:
-		cout << "Golem";
+		cout << "library";
 		*hp_enemigo = 13;
 		break;
 	case 6:
+		cout << "cmd.exe";
+		*hp_enemigo = 12;
+		break;
 	case 7:
-		cout << "Slime Verde";
+		cout << "rootmdm.sys";
 		*hp_enemigo = 12;
 		break;
 	case 8:
-		cout << "Rey Slime";
+		cout << "system32";
 		*hp_enemigo = 15;
 		break;
 	}
@@ -263,13 +273,13 @@ void MenuPrincipal(int *menu_state, int *game_screen)
 			cout << " _____ _____ _____ _____ _____ ";
 			break;
 		case 1:
-			cout << "|  _  |   __|     |     |     |";
+			cout << "|  |  |     | __  |  |  |   __|";
 			break;
 		case 2:
-			cout << "|     |__   |   --|-   -|-   -|";
+			cout << "|  |  |-   -|    -|  |  |__   |";
 			break;
 		case 3:
-			cout << "|__|__|_____|_____|_____|_____|";
+			cout << " \\___/|_____|__|__|_____|_____|";
 			break;
 		case 4:
 			Console::ForegroundColor = ConsoleColor::DarkRed;
@@ -294,7 +304,7 @@ void MenuPrincipal(int *menu_state, int *game_screen)
 				Console::BackgroundColor = ConsoleColor::DarkRed;
 				Console::ForegroundColor = ConsoleColor::Black;
 			}
-			cout << " Start ";
+			cout << "[  run hack.exe   ]";
 			Console::BackgroundColor = ConsoleColor::Black;
 			Console::ForegroundColor = ConsoleColor::Gray;
 			break;
@@ -304,7 +314,7 @@ void MenuPrincipal(int *menu_state, int *game_screen)
 				Console::BackgroundColor = ConsoleColor::DarkRed;
 				Console::ForegroundColor = ConsoleColor::Black;
 			}
-			cout << " Ayuda ";
+			cout << "[   README.txt    ]";
 			Console::BackgroundColor = ConsoleColor::Black;
 			Console::ForegroundColor = ConsoleColor::Gray;
 			break;
@@ -314,7 +324,7 @@ void MenuPrincipal(int *menu_state, int *game_screen)
 				Console::BackgroundColor = ConsoleColor::DarkRed;
 				Console::ForegroundColor = ConsoleColor::Black;
 			}
-			cout << " Salir ";
+			cout << "[ system.shutdown ]";
 			Console::BackgroundColor = ConsoleColor::Black;
 			Console::ForegroundColor = ConsoleColor::Gray;
 			break;
@@ -336,8 +346,8 @@ void PantallaAyuda(int *game_screen)
 	char lT = 204;
 	char rT = 185;
 	char jugador = 254;
-	char llave = 'L';
-	char tesoro = 'T';
+	char llave = 'C';
+	char tesoro = 'D';
 	char salida = 'S';
 	char pared = 219;
 	char piso = 176;
@@ -402,22 +412,22 @@ void PantallaAyuda(int *game_screen)
 					switch (j - 3)
 					{
 					case 0:
-						cout << "Llave               (nesecitaras esto)";
+						cout << "Clave de acceso        (nesecitaras esto)";
 						break;
 					case 2:
-						cout << "Tesoro              (a.k.a los restos de alguien)";
+						cout << "Directorio             (a.k.a datos desprotegidos)";
 						break;
 					case 4:
-						cout << "Salida del Nivel    (esto todavia sigue!?)";
+						cout << "Salida del Nivel       (esto todavia sigue!?)";
 						break;
 					case 6:
-						cout << "Zona NO Explorada   (cuidado, monstruos!)";
+						cout << "Memoria NO Explorada   (cuidado, antivirus!)";
 						break;
 					case 8:
-						cout << "Zona Explorada      (totalmente seguro, confia en mi ...)";
+						cout << "Memoria Explorada      (totalmente seguro, confia en mi ...)";
 						break;
 					case 10:
-						cout << "El Jugador          (efectivamente, este eres tu)";
+						cout << "El Jugador             (efectivamente, este eres tu)";
 						break;
 					default:
 						break;
@@ -463,7 +473,7 @@ void PantallaAyuda(int *game_screen)
 						cout << "para moverse                 (...duh)";
 						break;
 					case 2:
-						cout << "para tomar una pocion        (si te quedan algunas)";
+						cout << "para acceder a un puntero    (si te quedan algunos)";
 						break;
 					case 4:
 						cout << "para salir al Menu Principal (no te culpo si me dejas (T_T) )";
@@ -752,6 +762,7 @@ void RotarPieza(int **pieza, int *dir)
 			pieza[i][j] = aux[i][j];
 	}
 }
+
 int main()
 {
 	bool *es_enter, *es_esc, *tiene_llave, *uso_pocion;
