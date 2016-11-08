@@ -5,22 +5,6 @@
 using namespace System;
 using namespace std;
 
-/*
-Hola Agustin!
-ok... aqui esta mi codigo. tomate tu tiempo y leelo con calma.
-espero que lo entiendas. de lo contrario avisame!!
-te recomendaria que busques algun tutorial en youtube de como usar GitHub con visual studio (es una especie de
-dropbox pero para desarollo de codigo). eso nos ayudara a escribir simultaneamente el juego.
-
--Domo
-
-P.D.
-todas las funciones las estoy escribiendo con mayuscula al comienzo de cada palabra, si el nombre tiene mas de una, no
-hay espacio. la funcion "mi primera funcion" se escribiria asi: MiPrimeraFuncion().
-las variables las estoy escribiendo todo en minuscula, si son varias palabras las separo con "_". la variable
-"mi primer entero" seria entonces: int mi_primer_entero.
-:D
-*/
 
 #define KEY_UP 72 // estos son los scancodes de las teclas direccionales, las uso en la funcion Captura()
 #define KEY_DOWN 80
