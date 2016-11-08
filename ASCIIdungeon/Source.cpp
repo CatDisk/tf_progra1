@@ -304,7 +304,7 @@ void MenuPrincipal(int *menu_state, int *game_screen)
 				Console::BackgroundColor = ConsoleColor::DarkRed;
 				Console::ForegroundColor = ConsoleColor::Black;
 			}
-			cout << "[  run hack.exe   ]";
+			cout << "[  run hack.bat   ]";
 			Console::BackgroundColor = ConsoleColor::Black;
 			Console::ForegroundColor = ConsoleColor::Gray;
 			break;
