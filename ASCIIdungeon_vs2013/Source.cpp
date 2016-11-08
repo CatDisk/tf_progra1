@@ -51,10 +51,10 @@ void GenerarMapa(int **matriz, int *fila, int *columna);
 void RotarPieza(int **pieza, int *dir);
 /* rota la pieza
 *dir | grados
-0      0
-1     90
-2    180
-3    270    */
+ 0      0
+ 1     90
+ 2    180
+ 3    270    */
 
 // aqui comienzan las funciones
 void Dibujante(int *menu_state, int *hp_jugador, int *cant_pociones, int *dmg, bool *tiene_llave, bool *uso_pocion, int *id_enemigo, int *hp_enemigo, int **matriz, int *fila, int *columna)
