@@ -5,7 +5,7 @@
 using namespace System;
 using namespace std;
 
-//asdasdasd 123456789
+
 #define KEY_UP 72 // estos son los scancodes de las teclas direccionales, las uso en la funcion Captura()
 #define KEY_DOWN 80
 #define KEY_LEFT 75
@@ -713,18 +713,103 @@ int** GenerarPieza(int *id_pieza)
 	return aux;
 }
 
-void GenerarMapa(int **matriz, int *fila, int *columna)
+void GenerarMapa(int **matriz, int *fila, int *columna, int *nivel)
 {
-	int counter = 0;
-	for (int i = 0; i < (*fila / 3); i++)
+	for (int i = 0; i < *fila; i++)
 	{
-		for (int j = 0; j < (*columna / 3); j++)
+		for (int j = 0; j < *columna; j++)
 		{
-			matriz[i][j] = (counter % 5) + 1;
-			counter++;
+			matriz[i][j] = 60;
 		}
-		counter++;
 	}
+
+	switch (*nivel)
+	{
+	case 1: //primer mapa
+		for (int i = 0; i < *fila; i++)
+		{
+			for (int j = 0; j < *columna; j++)
+			{
+				if (i == 3)
+				{
+					matriz[3][0] = 41; //entrada
+					matriz[3][9] = 23;
+
+					if (j > 0 && j < 9)
+					{
+						matriz[i][j] = 31;
+					}
+				}
+
+				if (i == 2)
+				{
+					matriz[2][0] = 41;
+					matriz[2][1] = 22;
+					matriz[2][9] = 30;
+
+					if (j == 3 || j == 6)
+					{
+						matriz[i][j] = 31;
+					}
+
+					if (j == 2 || j == 5)
+					{
+						matriz[i][j] = 20;
+					}
+
+					if (j == 4 || j == 7)
+					{
+						matriz[i][j] = 23;
+					}
+				}
+
+				if (i == 1)
+				{
+					matriz[1][0] = 20;
+					matriz[1][6] = 40;
+
+					if (j == 1 || j == 8)
+					{
+						matriz[i][j] = 31;
+					}
+
+					if (j == 2 || j == 5 || j == 9)
+					{
+						matriz[i][j] = 22;
+					}
+
+					if (j == 4 || j == 7)
+					{
+						matriz[i][j] = 21;
+					}
+				}
+
+				if (i == 0)
+				{
+					matriz[0][9] = 43; //salida
+					matriz[0][0] = 21;
+					if (j > 0 && j < 9)
+					{
+						matriz[i][j] = 31;
+					}
+				}
+			}
+		}
+		break;
+	case 2: // mapa 2
+		break;
+	case 3:
+		// mapa 3
+		break;
+	case 4:
+		// mapa 4
+		break;
+	case 5:
+		// mapa 5
+		break;
+	}
+
+	
 }
 
 void RotarPieza(int **pieza, int *dir)
