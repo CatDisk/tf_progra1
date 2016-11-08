@@ -579,7 +579,10 @@ void GenerarMatriz(int **matriz, int *fila, int *columna)
 	{
 		for (int j = 0; j < *columna; j++)
 		{
-			matriz[i][j] = (counter % 8) + 1; // por ahora estoy imprimiendo todos los iconos del mapa undo detras del otro
+			if (counter % 2 == 0)
+				matriz[i][j] = 1;
+			else
+				matriz[i][j] = 2;
 			counter++;
 		}
 		counter++;
@@ -779,8 +782,8 @@ int main()
 	dmg = new int; // el ataque del jugador
 	id_enemigo = new int; // la identificacion del enemigo
 	hp_enemigo = new int; // la vida del enemigo
-	fila = new int; *fila = 51;
-	columna = new int; *columna = 24;
+	fila = new int; *fila = 30; // 51
+	columna = new int; *columna = 18; // 24
 
 	Console::CursorVisible = false;
 
