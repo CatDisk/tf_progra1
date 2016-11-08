@@ -5,7 +5,7 @@
 using namespace System;
 using namespace std;
 
-//asdasdasd
+
 #define KEY_UP 72 // estos son los scancodes de las teclas direccionales, las uso en la funcion Captura()
 #define KEY_DOWN 80
 #define KEY_LEFT 75
