@@ -34,7 +34,7 @@ void ImprimirMatriz(int **matriz, int *fila, int *columna);
 // imprime la matriz **matriz
 int** GenerarPieza(int *id_pieza);
 // crea y genera una matriz de 3 x 3 segun *id_pieza
-void GenerarMapa(int **matriz, int *fila, int *columna);
+void GenerarMapa(int **matriz, int *fila, int *columna, int *nivel);
 // genera una matriz con los valores *id_pieza (las dimensiones de la matriz dada tienen que ser de (*fila / 3) x (*columna / 3)
 void RotarPieza(int **pieza, int *dir);
 /* rota la pieza
