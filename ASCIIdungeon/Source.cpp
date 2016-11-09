@@ -5,22 +5,6 @@
 using namespace System;
 using namespace std;
 
-/*
-Hola Agustin!
-ok... aqui esta mi codigo. tomate tu tiempo y leelo con calma.
-espero que lo entiendas. de lo contrario avisame!!
-te recomendaria que busques algun tutorial en youtube de como usar GitHub con visual studio (es una especie de
-dropbox pero para desarollo de codigo). eso nos ayudara a escribir simultaneamente el juego.
-
--Domo
-
-P.D.
-todas las funciones las estoy escribiendo con mayuscula al comienzo de cada palabra, si el nombre tiene mas de una, no
-hay espacio. la funcion "mi primera funcion" se escribiria asi: MiPrimeraFuncion().
-las variables las estoy escribiendo todo en minuscula, si son varias palabras las separo con "_". la variable
-"mi primer entero" seria entonces: int mi_primer_entero.
-:D
-*/
 
 #define KEY_UP 72 // estos son los scancodes de las teclas direccionales, las uso en la funcion Captura()
 #define KEY_DOWN 80
@@ -332,6 +316,11 @@ void MenuPrincipal(int *menu_state, int *game_screen)
 			break;
 		}
 	}
+	Console::SetCursorPosition(1,23);
+	Console::ForegroundColor = ConsoleColor::DarkGray;
+	cout << "por A.Mansilla y D.Schialer, (CC BY-SA 4.0)";
+	Console::ForegroundColor = ConsoleColor::Gray;
+	// para mas informacion visite https://creativecommons.org/licenses/by-sa/4.0/
 	*game_screen = 0;
 }
 
@@ -846,7 +835,9 @@ void RotarPieza(int **pieza, int *dir)
 int main()
 {
 	bool *es_enter, *es_esc, *tiene_llave, *uso_pocion;
-	int *scancode, *menu_state, *game_state, *hp_jugador, *cant_pociones, *dmg, *id_enemigo, *hp_enemigo, *fila, *columna, **matriz, *nivel;
+	int *scancode, *menu_state, *game_state, *hp_jugador, *cant_pociones,
+		*dmg, *id_enemigo, *hp_enemigo, *fila, *columna, **matriz, *nivel,
+		**mapa_nivel_1, *fila_mapa, *columna_mapa;
 	scancode = new int; // es el scancode de las teclas ingresadas
 	menu_state = new int; // que opcion se selecciono en el menu
 	es_enter = new bool; // si se presiono enter
@@ -859,8 +850,10 @@ int main()
 	dmg = new int; // el ataque del jugador
 	id_enemigo = new int; // la identificacion del enemigo
 	hp_enemigo = new int; // la vida del enemigo
-	fila = new int; *fila = 30; // 51
-	columna = new int; *columna = 18; // 24
+	fila = new int; *fila = 50;
+	columna = new int; *columna = 20;
+	fila_mapa = new int; *fila_mapa = *fila / 5;
+	columna_mapa = new int; *columna_mapa = *columna / 5;
 	nivel = new int; *nivel = 1; // GenerarMapa() genera la matriz mapa para el nivel (1-5) correspondiente
 
 	Console::CursorVisible = false;
@@ -878,7 +871,8 @@ int main()
 
 	MenuPrincipal(menu_state, game_state);
 
-	matriz = CrearMatriz(fila, columna); // el mapa que sa va a imprimir
+	matriz = CrearMatriz(fila, columna); // crea la matriz principal
+	mapa_nivel_1 = CrearMatriz(fila_mapa, columna_mapa); // crea el mapa de las fichas
 	GenerarMatriz(matriz, fila, columna);
 
 	while (true)
