@@ -50,7 +50,7 @@ void ImprimirMatriz(int **matriz, int *fila, int *columna);
 // imprime la matriz **matriz
 int** GenerarPieza(int *id_pieza);
 // crea y genera una matriz de 3 x 3 segun *id_pieza
-void GenerarMapa(int **matriz, int *fila, int *columna);
+void GenerarMapa(int **matriz, int *fila, int *columna, int *nivel);
 // genera una matriz con los valores *id_pieza (las dimensiones de la matriz dada tienen que ser de (*fila / 3) x (*columna / 3)
 void RotarPieza(int **pieza, int *dir);
 /* rota la pieza
@@ -646,101 +646,178 @@ void ImprimirMatriz(int **matriz, int *fila, int *columna)
 
 int** GenerarPieza(int *id_pieza)
 {
-	int **aux = new int*[3];
-	for (int i = 0; i < 3; i++)
+	/*
+	0 = nada
+	1 = pared safe
+	2 = piso safe
+	3 = pared danger
+	4 = piso danger
+	5 = jugador
+	6 = llave
+	7 = tesoro
+	8 = salida
+	*/
+
+	int **aux = new int*[5];
+	int tipo = *id_pieza / 10; // decomposicion del primer digito
+
+	for (int i = 0; i < 5; i++)
 	{
-		aux[i] = new int[3];
+		aux[i] = new int[5];
 	}
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 5; i++)
 	{
-		for (int j = 0; j < 3; j++)
+		for (int j = 0; j < 5; j++)
 		{
-			switch (*id_pieza)
+			switch (tipo)
 			{
 			case 1: // cruz
-				if (i == 0 || i == 2)
+				if (i == 0 || i == 4)
 				{
-					if (j == 0 || j == 2)
+					if (j == 0 || j == 4)
 						aux[i][j] = 1;
 				}
 				else
 					aux[i][j] = 2;
 				break;
 			case 2: // L
-				if (i == 0 || i == 2)
-				{
-					if (j == 0 || j == 2)
-						aux[i][j] = 1;
-				}
-				else if (i == 0 && j == 1)
+				if (j == 0)
 					aux[i][j] = 1;
-				else if (i == 1 && j == 2)
+				else if (i == 4)
+					aux[i][j] = 1;
+				else if (i == 0 && j == 4)
 					aux[i][j] = 1;
 				else
 					aux[i][j] = 2;
 				break;
 			case 3: // recta
-				if (i == 0 || i == 2)
-				{
-					if (j == 0 || j == 2)
-						aux[i][j] = 1;
-				}
-				else if (i == 1)
-				{
-					if (j != 1)
-						aux[i][j] = 1;
-				}
+				if (i == 0 || i == 4)
+					aux[i][j] = 1;
 				else
 					aux[i][j] = 2;
 				break;
 			case 4: // callejon
-				if (i == 0 || i == 2)
-				{
-					if (j == 0 || j == 2)
-						aux[i][j] = 1;
-				}
-				else if (i == 1)
-				{
-					if (j != 1)
-						aux[i][j] = 1;
-				}
-				else if (i == 2 && j == 1)
+				if (i == 0 || i == 4)
+					aux[i][j] = 1;
+				else if (j == 4)
 					aux[i][j] = 1;
 				else
 					aux[i][j] = 2;
 				break;
 			case 5: // T
-				if (i == 0 || i == 2)
-				{
-					if (j == 0 || j == 2)
-						aux[i][j] = 1;
-				}
-				else if (i == 2 && j == 1)
+				if (i == 4)
+					aux[i][j] = 1;
+				else if (i == 0 && (j == 0 || j == 4))
 					aux[i][j] = 1;
 				else
 					aux[i][j] = 2;
 				break;
-			default:
-				break;
+			case 6: // vacio
+				aux[i][j] = 0;
 			}
 		}
 	}
 	return aux;
 }
 
-void GenerarMapa(int **matriz, int *fila, int *columna)
+void GenerarMapa(int **matriz, int *fila, int *columna, int *nivel)
 {
-	int counter = 0;
-	for (int i = 0; i < (*fila / 3); i++)
+
+	for (int i = 0; i < *fila; i++)
 	{
-		for (int j = 0; j < (*columna / 3); j++)
+		for (int j = 0; j < *columna; j++)
 		{
-			matriz[i][j] = (counter % 5) + 1;
-			counter++;
+			matriz[i][j] = 60;
 		}
-		counter++;
 	}
+
+	switch (*nivel)
+	{
+	case 1: //primer mapa
+		for (int i = 0; i < *fila; i++)
+		{
+			for (int j = 0; j < *columna; j++)
+			{
+				if (i == 3)
+				{
+					matriz[3][0] = 41; //entrada
+					matriz[3][9] = 23;
+
+					if (j > 0 && j < 9)
+					{
+						matriz[i][j] = 31;
+					}
+				}
+
+				if (i == 2)
+				{
+					matriz[2][0] = 41;
+					matriz[2][1] = 22;
+					matriz[2][9] = 30;
+
+					if (j == 3 || j == 6)
+					{
+						matriz[i][j] = 31;
+					}
+
+					if (j == 2 || j == 5)
+					{
+						matriz[i][j] = 20;
+					}
+
+					if (j == 4 || j == 7)
+					{
+						matriz[i][j] = 23;
+					}
+				}
+
+				if (i == 1)
+				{
+					matriz[1][0] = 20;
+					matriz[1][6] = 40;
+
+					if (j == 1 || j == 8)
+					{
+						matriz[i][j] = 31;
+					}
+
+					if (j == 2 || j == 5 || j == 9)
+					{
+						matriz[i][j] = 22;
+					}
+
+					if (j == 4 || j == 7)
+					{
+						matriz[i][j] = 21;
+					}
+				}
+
+				if (i == 0)
+				{
+					matriz[0][9] = 43; //salida
+					matriz[0][0] = 21;
+					if (j > 0 && j < 9)
+					{
+						matriz[i][j] = 31;
+					}
+				}
+			}
+		}
+		break;
+	case 2: // mapa 2
+		break;
+	case 3:
+		// mapa 3
+		break;
+	case 4:
+		// mapa 4
+		break;
+	case 5:
+		// mapa 5
+		break;
+	}
+
 }
 
 void RotarPieza(int **pieza, int *dir)
@@ -769,7 +846,7 @@ void RotarPieza(int **pieza, int *dir)
 int main()
 {
 	bool *es_enter, *es_esc, *tiene_llave, *uso_pocion;
-	int *scancode, *menu_state, *game_state, *hp_jugador, *cant_pociones, *dmg, *id_enemigo, *hp_enemigo, *fila, *columna, **matriz;
+	int *scancode, *menu_state, *game_state, *hp_jugador, *cant_pociones, *dmg, *id_enemigo, *hp_enemigo, *fila, *columna, **matriz, *nivel;
 	scancode = new int; // es el scancode de las teclas ingresadas
 	menu_state = new int; // que opcion se selecciono en el menu
 	es_enter = new bool; // si se presiono enter
@@ -784,6 +861,7 @@ int main()
 	hp_enemigo = new int; // la vida del enemigo
 	fila = new int; *fila = 30; // 51
 	columna = new int; *columna = 18; // 24
+	nivel = new int; *nivel = 1; // GenerarMapa() genera la matriz mapa para el nivel (1-5) correspondiente
 
 	Console::CursorVisible = false;
 
