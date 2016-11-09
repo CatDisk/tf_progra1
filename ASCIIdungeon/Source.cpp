@@ -1135,7 +1135,10 @@ void RotarPieza(int **pieza, int *dir)
 int main()
 {
 	bool *es_enter, *es_esc, *tiene_llave, *uso_pocion;
-	int *scancode, *menu_state, *game_state, *hp_jugador, *cant_pociones, *dmg, *id_enemigo, *hp_enemigo, *fila, *columna, **matriz;
+	int *scancode, *menu_state, *game_state, *hp_jugador, *cant_pociones,
+	*dmg, *id_enemigo, *hp_enemigo, *fila, *columna, **matriz,
+	*fila_mapa, *columna_mapa, **mapa, *nivel;
+
 	scancode = new int; // es el scancode de las teclas ingresadas
 	menu_state = new int; // que opcion se selecciono en el menu
 	es_enter = new bool; // si se presiono enter
@@ -1148,8 +1151,11 @@ int main()
 	dmg = new int; // el ataque del jugador
 	id_enemigo = new int; // la identificacion del enemigo
 	hp_enemigo = new int; // la vida del enemigo
-	fila = new int; *fila = 30; // 51
-	columna = new int; *columna = 18; // 24
+	fila = new int; *fila = 50; // para fichas de 5x5
+	columna = new int; *columna = 20; // para fichas de 5x5
+	fila_mapa = new int; *fila_mapa = *fila / 5;
+	columna_mapa = new int; *columna_mapa = *columna / 5;
+	nivel = new int; *nivel = 1; // el mapa que se va a imprimir
 
 	Console::CursorVisible = false;
 
@@ -1166,7 +1172,9 @@ int main()
 
 	MenuPrincipal(menu_state, game_state);
 
-	matriz = CrearMatriz(fila, columna); // el mapa que sa va a imprimir
+	matriz = CrearMatriz(fila, columna); // la matriz que sa va a imprimir
+	mapa = CrearMatriz(fila_mapa, columna_mapa);
+
 	GenerarMatriz(matriz, fila, columna);
 
 	while (true)
