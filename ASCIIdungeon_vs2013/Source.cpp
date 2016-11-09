@@ -1,3 +1,15 @@
+/*
+Trabajo final para programacion 1, seccion SI1A.
+
+Profesor:
+	-Victor Parasi
+
+Autores:
+	-Agustin Mansilla
+	-Dominic Schialer
+*/
+
+
 #include <conio.h>
 #include <stdio.h>
 #include <iostream>
@@ -39,10 +51,10 @@ void GenerarMapa(int **matriz, int *fila, int *columna);
 void RotarPieza(int **pieza, int *dir);
 /* rota la pieza
 *dir | grados
-0      0
-1     90
-2    180
-3    270    */
+ 0      0
+ 1     90
+ 2    180
+ 3    270    */
 
 // aqui comienzan las funciones
 void Dibujante(int *menu_state, int *hp_jugador, int *cant_pociones, int *dmg, bool *tiene_llave, bool *uso_pocion, int *id_enemigo, int *hp_enemigo, int **matriz, int *fila, int *columna)
@@ -630,83 +642,75 @@ void ImprimirMatriz(int **matriz, int *fila, int *columna)
 
 int** GenerarPieza(int *id_pieza)
 {
-	int **aux = new int*[3];
-	for (int i = 0; i < 3; i++)
+	/*
+	0 = nada
+	1 = pared safe
+	2 = piso safe
+	3 = pared danger
+	4 = piso danger
+	5 = jugador
+	6 = llave
+	7 = tesoro
+	8 = salida
+	*/
+
+	int **aux = new int*[5];
+	int tipo = *id_pieza / 10; // decomposicion del primer digito
+
+	for (int i = 0; i < 5; i++)
 	{
-		aux[i] = new int[3];
+		aux[i] = new int[5];
 	}
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 5; i++)
 	{
-		for (int j = 0; j < 3; j++)
+		for (int j = 0; j < 5; j++)
 		{
-			switch (*id_pieza)
+			switch (tipo)
 			{
 			case 1: // cruz
-				if (i == 0 || i == 2)
+				if (i == 0 || i == 4)
 				{
-					if (j == 0 || j == 2)
+					if (j == 0 || j == 4)
 						aux[i][j] = 1;
 				}
 				else
 					aux[i][j] = 2;
 				break;
 			case 2: // L
-				if (i == 0 || i == 2)
-				{
-					if (j == 0 || j == 2)
-						aux[i][j] = 1;
-				}
-				else if (i == 0 && j == 1)
+				if (j == 0)
 					aux[i][j] = 1;
-				else if (i == 1 && j == 2)
+				else if (i == 4)
+					aux[i][j] = 1;
+				else if (i == 0 && j == 4)
 					aux[i][j] = 1;
 				else
 					aux[i][j] = 2;
 				break;
 			case 3: // recta
-				if (i == 0 || i == 2)
-				{
-					if (j == 0 || j == 2)
-						aux[i][j] = 1;
-				}
-				else if (i == 1)
-				{
-					if (j != 1)
-						aux[i][j] = 1;
-				}
+				if (i == 0 || i == 4)
+					aux[i][j] = 1;
 				else
 					aux[i][j] = 2;
 				break;
 			case 4: // callejon
-				if (i == 0 || i == 2)
-				{
-					if (j == 0 || j == 2)
-						aux[i][j] = 1;
-				}
-				else if (i == 1)
-				{
-					if (j != 1)
-						aux[i][j] = 1;
-				}
-				else if (i == 2 && j == 1)
+				if (i == 0 || i == 4)
+					aux[i][j] = 1;
+				else if (j == 4)
 					aux[i][j] = 1;
 				else
 					aux[i][j] = 2;
 				break;
 			case 5: // T
-				if (i == 0 || i == 2)
-				{
-					if (j == 0 || j == 2)
-						aux[i][j] = 1;
-				}
-				else if (i == 2 && j == 1)
+				if (i == 4)
+					aux[i][j] = 1;
+				else if (i == 0 && (j == 0 || j == 4))
 					aux[i][j] = 1;
 				else
 					aux[i][j] = 2;
 				break;
-			default:
-				break;
+			case 6: // vacio
+				aux[i][j] = 0;
 			}
 		}
 	}
@@ -838,7 +842,7 @@ void RotarPieza(int **pieza, int *dir)
 int main()
 {
 	bool *es_enter, *es_esc, *tiene_llave, *uso_pocion;
-	int *scancode, *menu_state, *game_state, *hp_jugador, *cant_pociones, *dmg, *id_enemigo, *hp_enemigo, *fila, *columna, **matriz;
+	int *scancode, *menu_state, *game_state, *hp_jugador, *cant_pociones, *dmg, *id_enemigo, *hp_enemigo, *fila, *columna, **matriz, *fila_mapa, *columna_mapa;
 	scancode = new int; // es el scancode de las teclas ingresadas
 	menu_state = new int; // que opcion se selecciono en el menu
 	es_enter = new bool; // si se presiono enter
@@ -851,8 +855,10 @@ int main()
 	dmg = new int; // el ataque del jugador
 	id_enemigo = new int; // la identificacion del enemigo
 	hp_enemigo = new int; // la vida del enemigo
-	fila = new int; *fila = 50; // 51 <- para fichas de 3x3
-	columna = new int; *columna = 20; // 24 <- para fichas de 3x3
+	fila = new int; *fila = 50; // para fichas de 5x5
+	columna = new int; *columna = 20; // para fichas de 5x5
+	fila_mapa = new int; *fila_mapa = *fila / 5;
+	columna_mapa = new int; *columna_mapa = *columna / 5;
 
 	Console::CursorVisible = false;
 
