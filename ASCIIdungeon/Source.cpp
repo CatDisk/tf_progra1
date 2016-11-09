@@ -713,7 +713,7 @@ int** GenerarPieza(int *id_pieza)
 	return aux;
 }
 
-void GenerarMapa(int **matriz, int *fila, int *columna)
+void GenerarMapa(int **matriz, int *fila, int *columna, int *nivel)
 {
 	for (int i = 0; i < *fila; i++)
 	{
