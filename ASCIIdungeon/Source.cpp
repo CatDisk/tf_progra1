@@ -725,14 +725,14 @@ void GenerarMapa(int **matriz, int *fila, int *columna)
 
 	switch (*nivel)
 	{
-	case 1: //primer mapa
+	case 1: //mapa 1
 		for (int i = 0; i < *fila; i++)
 		{
 			for (int j = 0; j < *columna; j++)
 			{
 				if (i == 3)
 				{
-					matriz[3][0] = 41; //entrada
+					matriz[3][0] = 41; //ENTRADA
 					matriz[3][9] = 23;
 
 					if (j > 0 && j < 9)
@@ -786,7 +786,7 @@ void GenerarMapa(int **matriz, int *fila, int *columna)
 
 				if (i == 0)
 				{
-					matriz[0][9] = 43; //salida
+					matriz[0][9] = 43; //SALIDA
 					matriz[0][0] = 21;
 					if (j > 0 && j < 9)
 					{
@@ -796,20 +796,325 @@ void GenerarMapa(int **matriz, int *fila, int *columna)
 			}
 		}
 		break;
-	case 2: // mapa 2
+
+	case 2: //mapa 2
+		for (int i = 0; i < *fila; i++)
+		{
+			for (int j = 0; j < *columna; j++)
+			{
+				if (i == 0)
+				{
+					matriz[0][1] = 31;
+					matriz[0][2] = 43;
+					matriz[0][3] = 42;
+					matriz[0][6] = 41;
+
+					if (j == 0 || j == 4 || j == 8)
+					{
+						matriz[i][j] = 21;
+					}
+
+					if (j == 5 || j == 7 || j == 9)
+					{
+						matriz[i][j] = 22;
+					}
+				}
+
+				if (i == 1)
+				{
+					matriz[1][0] = 20;
+					matriz[1][1] = 22;
+					matriz[1][2] = 21;
+					matriz[1][5] = 51;
+					matriz[1][6] = 31;
+
+					if (j == 3 || j == 7)
+					{
+						matriz[i][j] = 23;
+					}
+
+					if (j == 4 || j == 8 || j == 9)
+					{
+						matriz[i][j] = 30;
+					}
+				}
+
+				if (i == 2)
+				{
+					matriz[2][0] = 41; //ENTRADA
+					matriz[2][1] = 53;
+					matriz[2][7] = 21;
+					matriz[2][8] = 23;
+					
+					if (j == 2 || j == 4 || j == 5 || j == 9)
+					{
+						matriz[i][j] = 30;
+					}
+				}
+
+				if (i == 3)
+				{
+					matriz[3][8] = 41; //SALIDA
+					matriz[3][2] = 50;
+
+					if (j == 1 || j == 5)
+					{
+						matriz[i][j] = 20;
+					}
+
+					if (j == 3 || j == 6)
+					{
+						matriz[i][j] = 31;
+					}
+
+					if (j == 4 || j == 7 || j == 9)
+					{
+						matriz[i][j] = 23;
+					}
+				}
+			}
+		}
 		break;
-	case 3:
-		// mapa 3
+
+	case 3: //mapa 3
+		for (int i = 0; i < *fila; i++)
+		{
+			for (int j = 0; j < *columna; j++)
+			{
+				if (i == 0)
+				{
+					matriz[0][0] = 42; //ENTRADA
+					matriz[0][1] = 41;
+					matriz[0][2] = 52;
+					matriz[0][3] = 43;
+					matriz[0][5] = 21;
+					matriz[0][9] = 22;
+
+					if (j == 6 || j == 7 || j == 8)
+					{
+						matriz[i][j] = 31;
+					}
+				}
+
+				if (i == 1)
+				{
+					matriz[1][3] = 42;
+					matriz[1][5] = 23;
+					matriz[1][7] = 31;
+					matriz[1][8] = 22;
+
+					if (j == 0 || j == 2 || j == 9)
+					{
+						matriz[i][j] = 30;
+					}
+
+					if (j == 4 || j == 6)
+					{
+						matriz[i][j] = 21;
+					}
+				}
+
+				if (i == 2)
+				{
+					matriz[2][8] = 40; //SALIDA
+					matriz[2][1] = 41;
+					matriz[2][2] = 50;
+					matriz[2][3] = 10;
+					matriz[2][4] = 23;
+					matriz[2][5] = 21;
+					matriz[2][6] = 53;
+
+					if (j == 0 || j == 9)
+					{
+						matriz[i][j] = 30;
+					}		
+				}
+
+				if (i == 3)
+				{
+					matriz[3][4] = 41;
+
+					if (j == 1 || j == 2 || j == 7 || j == 8)
+					{
+						matriz[i][j] = 31;
+					}
+
+					if (j == 0 || j == 6)
+					{
+						matriz[i][j] = 20;
+					}
+
+					if (j == 3 || j == 5 || j == 9)
+					{
+						matriz[i][j] = 23;
+					}
+				}
+			}
+		}
 		break;
-	case 4:
-		// mapa 4
+
+	case 4: //mapa 4
+		for (int i = 0; i < *fila; i++)
+		{
+			for (int j = 0; j < *columna; j++)
+			{
+				if (i == 3)
+				{
+					matriz[3][0] = 41; //ENTRADA
+					matriz[3][5] = 50;
+					matriz[3][7] = 20;
+					matriz[3][9] = 23;
+
+					if (j == 1 || j == 2 || j == 3 || j == 4 || j == 8)
+					{
+						matriz[i][j] = 31;
+					}
+				}
+
+				if (i == 2)
+				{
+					matriz[2][1] = 23;
+					matriz[2][4] = 31;
+					matriz[2][5] = 10;
+					matriz[2][6] = 43;
+					matriz[2][7] = 30;
+					matriz[2][9] = 42;
+
+					if (j == 0 || j == 3)
+					{
+						matriz[i][j] = 20;
+					}
+				}
+
+				if (i == 1)
+				{
+					matriz[1][0] = 30;
+					matriz[1][8] = 20;
+					matriz[1][9] = 23;
+
+					if (j == 1 || j == 5)
+					{
+						matriz[i][j] = 21;
+					}
+
+					if (j == 2 || j == 6)
+					{
+						matriz[i][j] = 31;
+					}
+
+					if (j == 3 || j == 7)
+					{
+						matriz[i][j] = 22;
+					}
+				}
+
+				if (i == 0)
+				{
+					matriz[0][9] = 42; //SALIDA
+					matriz[0][0] = 21;
+					matriz[0][8] = 22;					
+
+					if (j == 1 || j == 2 || j == 3 || j == 4 || j == 5 || j == 6 || j == 7)
+					{
+						matriz[i][j] = 31;
+					}
+				}
+			}
+		}
 		break;
-	case 5:
-		// mapa 5
+
+	case 5:	//mapa 5
+		for (int i = 0; i < *fila; i++)
+		{
+			for (int j = 0; j < *columna; j++)
+			{
+				if (i == 3)
+				{
+					matriz[3][0] = 40; //ENTRADA
+					matriz[3][1] = 41;
+					matriz[3][2] = 50;
+					matriz[3][6] = 23;
+
+					if (j == 3 || j == 9)
+					{
+						matriz[i][j] = 43;
+					}
+
+					if (j == 4 || j == 7)
+					{
+						matriz[i][j] = 20;
+					}
+
+					if (j == 5 || j == 8)
+					{
+						matriz[i][j] = 31;
+					}
+				}
+
+				if (i == 2)
+				{
+					matriz[2][2] = 10;
+					matriz[2][6] = 21;
+					matriz[2][7] = 22;
+
+					if (j == 0 || j == 4)
+					{
+						matriz[i][j] = 30;
+					}
+
+					if (j == 1 || j == 8)
+					{
+						matriz[i][j] = 20;
+					}
+
+					if (j == 3 || j == 9)
+					{
+						matriz[i][j] = 23;
+					}
+				}
+
+				if (i == 1)
+				{
+					matriz[1][3] = 21;
+					matriz[1][4] = 22;
+					matriz[1][5] = 20;
+					matriz[1][8] = 53;
+
+					if (j == 0 || j == 1 || j == 2 || j == 9)
+					{
+						matriz[i][j] = 30;
+					}
+
+					if (j == 6 || j == 7)
+					{
+						matriz[i][j] = 31;
+					}
+				}
+
+				if (i == 0)
+				{
+					matriz[0][9] = 42; //SALIDA
+					matriz[0][6] = 41;
+
+					if (j == 3 || j == 4 || j == 7)
+					{
+						matriz[i][j] = 31;
+					}
+
+					if (j == 0 || j == 2)
+					{
+						matriz[i][j] = 21;
+					}
+
+					if (j == 1 || j == 5 || j == 8)
+					{
+						matriz[i][j] = 22;
+					}
+				}
+			}
+		}
 		break;
 	}
-
-
 }
 
 void RotarPieza(int **pieza, int *dir)
