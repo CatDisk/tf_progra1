@@ -630,83 +630,75 @@ void ImprimirMatriz(int **matriz, int *fila, int *columna)
 
 int** GenerarPieza(int *id_pieza)
 {
-	int **aux = new int*[3];
-	for (int i = 0; i < 3; i++)
+	/*
+	0 = nada
+	1 = pared safe
+	2 = piso safe
+	3 = pared danger
+	4 = piso danger
+	5 = jugador
+	6 = llave
+	7 = tesoro
+	8 = salida
+	*/
+
+	int **aux = new int*[5];
+	int tipo = *id_pieza / 10; // decomposicion del primer digito
+
+	for (int i = 0; i < 5; i++)
 	{
-		aux[i] = new int[3];
+		aux[i] = new int[5];
 	}
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 5; i++)
 	{
-		for (int j = 0; j < 3; j++)
+		for (int j = 0; j < 5; j++)
 		{
-			switch (*id_pieza)
+			switch (tipo)
 			{
 			case 1: // cruz
-				if (i == 0 || i == 2)
+				if (i == 0 || i == 4)
 				{
-					if (j == 0 || j == 2)
+					if (j == 0 || j == 4)
 						aux[i][j] = 1;
 				}
 				else
 					aux[i][j] = 2;
 				break;
 			case 2: // L
-				if (i == 0 || i == 2)
-				{
-					if (j == 0 || j == 2)
-						aux[i][j] = 1;
-				}
-				else if (i == 0 && j == 1)
+				if (j == 0)
 					aux[i][j] = 1;
-				else if (i == 1 && j == 2)
+				else if (i == 4)
+					aux[i][j] = 1;
+				else if (i == 0 && j == 4)
 					aux[i][j] = 1;
 				else
 					aux[i][j] = 2;
 				break;
 			case 3: // recta
-				if (i == 0 || i == 2)
-				{
-					if (j == 0 || j == 2)
-						aux[i][j] = 1;
-				}
-				else if (i == 1)
-				{
-					if (j != 1)
-						aux[i][j] = 1;
-				}
+				if (i == 0 || i == 4)
+					aux[i][j] = 1;
 				else
 					aux[i][j] = 2;
 				break;
 			case 4: // callejon
-				if (i == 0 || i == 2)
-				{
-					if (j == 0 || j == 2)
-						aux[i][j] = 1;
-				}
-				else if (i == 1)
-				{
-					if (j != 1)
-						aux[i][j] = 1;
-				}
-				else if (i == 2 && j == 1)
+				if (i == 0 || i == 4)
+					aux[i][j] = 1;
+				else if (j == 4)
 					aux[i][j] = 1;
 				else
 					aux[i][j] = 2;
 				break;
 			case 5: // T
-				if (i == 0 || i == 2)
-				{
-					if (j == 0 || j == 2)
-						aux[i][j] = 1;
-				}
-				else if (i == 2 && j == 1)
+				if (i == 4)
+					aux[i][j] = 1;
+				else if (i == 0 && (j == 0 || j == 4))
 					aux[i][j] = 1;
 				else
 					aux[i][j] = 2;
 				break;
-			default:
-				break;
+			case 6: // vacio
+				aux[i][j] = 0;
 			}
 		}
 	}
